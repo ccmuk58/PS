@@ -16,10 +16,13 @@
     <Filter Include="Source Files\Greedy">
       <UniqueIdentifier>{4b7d4158-a26d-4f76-93d7-316786e556e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Stack">
+      <UniqueIdentifier>{eedf7ea9-22fe-4ffb-b65f-ef2baa65ac2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BOJ_1543.cpp">
-      <Filter>Source Files\Greedy</Filter>
+    <ClCompile Include="BOJ_2304.cpp">
+      <Filter>Source Files\Stack</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
