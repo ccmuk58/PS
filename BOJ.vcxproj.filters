@@ -19,10 +19,19 @@
     <Filter Include="Source Files\Stack">
       <UniqueIdentifier>{eedf7ea9-22fe-4ffb-b65f-ef2baa65ac2b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\BruteForce">
+      <UniqueIdentifier>{9342e5f5-8014-4eeb-8fff-1a9f2dd292e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BOJ_10773.cpp">
+      <Filter>Source Files\Stack</Filter>
+    </ClCompile>
     <ClCompile Include="BOJ_2304.cpp">
       <Filter>Source Files\Stack</Filter>
+    </ClCompile>
+    <ClCompile Include="BOJ_2304_2.cpp">
+      <Filter>Source Files\BruteForce</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
