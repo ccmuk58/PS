@@ -33,5 +33,8 @@
     <ClCompile Include="BOJ_2304_2.cpp">
       <Filter>Source Files\BruteForce</Filter>
     </ClCompile>
+    <ClCompile Include="BOJ_17299.cpp">
+      <Filter>Source Files\Stack</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
