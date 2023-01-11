@@ -16,25 +16,31 @@
     <Filter Include="Source Files\Greedy">
       <UniqueIdentifier>{4b7d4158-a26d-4f76-93d7-316786e556e2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Stack">
-      <UniqueIdentifier>{eedf7ea9-22fe-4ffb-b65f-ef2baa65ac2b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\BruteForce">
       <UniqueIdentifier>{9342e5f5-8014-4eeb-8fff-1a9f2dd292e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Data Structure">
+      <UniqueIdentifier>{eedf7ea9-22fe-4ffb-b65f-ef2baa65ac2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DP">
+      <UniqueIdentifier>{365e0198-ba9c-4447-8b86-dcd74cd7507b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BOJ_10773.cpp">
-      <Filter>Source Files\Stack</Filter>
+    <ClCompile Include="10773.cpp">
+      <Filter>Source Files\Data Structure</Filter>
     </ClCompile>
-    <ClCompile Include="BOJ_2304.cpp">
-      <Filter>Source Files\Stack</Filter>
+    <ClCompile Include="2304.cpp">
+      <Filter>Source Files\Data Structure</Filter>
     </ClCompile>
-    <ClCompile Include="BOJ_2304_2.cpp">
+    <ClCompile Include="2304_BruteForce.cpp">
       <Filter>Source Files\BruteForce</Filter>
     </ClCompile>
-    <ClCompile Include="BOJ_17299.cpp">
-      <Filter>Source Files\Stack</Filter>
+    <ClCompile Include="17299.cpp">
+      <Filter>Source Files\Data Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="2748.cpp">
+      <Filter>Source Files\DP</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
