@@ -4,7 +4,7 @@
 using namespace std;
 constexpr int RANGE = 302;
 
-int GetMaxDP(int dp[3]) {
+int GetMaxDP(int* dp) {
 	int max = (dp[1] > dp[2]) ? dp[1] : dp[2];
 	return max;
 }
@@ -23,6 +23,8 @@ int main()
 	for (int i = 1; i <= n; i++) 
 		cin >> stair[i];
 
+	// int a = max(0, 1);
+	
 	// �ʱⰪ
 	dp[1][1] = stair[1];
 	for (int i = 2; i <= n; i++)
