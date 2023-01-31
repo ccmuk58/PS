@@ -4,7 +4,7 @@
 using namespace std;
 constexpr int RANGE = 302;
 
-int GetMaxDP(int dp[3]) {
+int GetMaxDP(int* dp) {
 	int max = (dp[1] > dp[2]) ? dp[1] : dp[2];
 	return max;
 }
