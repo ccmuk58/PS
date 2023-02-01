@@ -4,13 +4,14 @@
 #include<stack>
 #include<queue>
 using namespace std;
+constexpr int RANGE = 1002;
 
 int N, M, V;
-vector<int> graph[1002];
+vector<int> graph[RANGE];
 
 void dfs() 
 {
-	bool visit[1002]{};
+	bool visit[RANGE]{};
 	stack<int> s;
 	s.push(V);
 
@@ -27,10 +28,8 @@ void dfs()
 		visit[v] = true;
 		cout << v << " ";
 
-		for (int i = 0; i < graph[v].size(); i++) {
-			if (visit[graph[v][i]]) continue;
+		for (int i = 0; i < graph[v].size(); i++)
 			s.push(graph[v][i]);
-		}
 	}
 	cout << "\n";
 }
@@ -39,7 +38,7 @@ void bfs()
 	for (int i = 1; i <= N; i++)
 		sort(graph[i].begin(), graph[i].end());
 
-	bool visit[1002]{};
+	bool visit[RANGE]{};
 	queue<int> q;
 	q.push(V);
 
@@ -53,10 +52,8 @@ void bfs()
 		visit[v] = true;
 		cout << v << " ";
 
-		for (int i = 0; i < graph[v].size(); i++) {
-			if (visit[graph[v][i]]) continue;
+		for (int i = 0; i < graph[v].size(); i++)
 			q.push(graph[v][i]);
-		}
 	}
 	cout << "\n";
 }
@@ -64,7 +61,6 @@ void bfs()
 int main() {
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);
-
 
 	cin >> N >> M >> V;
 
