@@ -1,6 +1,5 @@
 #include<iostream>
 #include<algorithm>
-#include<vector>
 #include<string>
 #include<map>
 using namespace std;
@@ -8,7 +7,7 @@ using namespace std;
 void solve()
 {
 	map<string, int> m{};
-	vector<string> v{};
+	map<string, int>::iterator iter;
 	string clothes, type;
 	int cnt = 1;
 	int n;
@@ -18,19 +17,9 @@ void solve()
 	{
 		cin >> clothes >> type;
 		m[type]++;
-		bool isHas = false;
-		for (int j = 0; j < v.size(); j++)
-		{
-			if (v[j] == type)
-			{
-				isHas = true;
-				break;
-			}
-		}
-		if (!isHas || v.size() == 0) v.push_back(type);
 	}
-	for (int i = 0; i < v.size(); i++)
-		cnt *= m[v[i]]+1;
+	for (iter = m.begin(); iter != m.end(); iter++)
+		cnt *= iter->second+1;
 
 	cout << --cnt << "\n";
 }
