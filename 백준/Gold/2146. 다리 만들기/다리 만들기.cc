@@ -1,44 +1,44 @@
 #include<iostream>
-#include<algorithm>
 #include<queue>
 using namespace std;
 constexpr int LIMIT = 102;
+constexpr int MAX = 100000;
 
 struct Block{
 	int y;
 	int x;
-	int cnt;
+	int dis;
 };
+int dy[] = { 0,0,1,-1 };
+int dx[] = { -1,1,0,0 };
 int map[LIMIT][LIMIT]{};
-int tags[LIMIT][LIMIT]{};
-int tag;
-int ans = 10000;
+int names[LIMIT][LIMIT]{};
+int cnt;
+int ans = MAX;
 int N;
 
 void DFS(int y, int x)
 {
-
-	if (!map[y][x] || tags[y][x]) return;
-	tags[y][x] = tag;
-
-	DFS(y, x-1);
-	DFS(y, x+1);
-	DFS(y-1, x);
-	DFS(y+1, x);
+	if (!map[y][x] || names[y][x]) return;
+	names[y][x] = cnt;
+	
+	for (int i = 0; i < 4; i++)
+		DFS(y + dy[i], x + dx[i]);
 }
 void BFS(int y, int x)
 {
 	bool visited[LIMIT][LIMIT]{};
-	int startTag = tags[y][x];
+	int sIsland = names[y][x];
 
 	queue<Block> q;
-	q.push({ y, x, 1 });
+	q.push({ y, x, 0 });
 
 	while (!q.empty())
 	{
 		int qy = q.front().y;
 		int qx = q.front().x;
-		int cnt = q.front().cnt;
+		int dis = q.front().dis + 1;
+		int nIsland = names[qy][qx];
 		q.pop();
 
 		//  OutOfBounds 방지
@@ -48,22 +48,18 @@ void BFS(int y, int x)
 		if (visited[qy][qx]) continue;
 		visited[qy][qx] = true;
 		
-		int nowTag = tags[qy][qx];
-		
-		// 시간 초과 방지
-		if (nowTag == startTag && (y != qy && x != qx)) continue;
+		// 시간 초과 방지 (같은 섬간 이동 제한)
+		if (nIsland == sIsland && (y != qy && x != qx)) continue;
 
 		// 최단 경로 체크
-		if (nowTag && nowTag != startTag)
+		if (nIsland && nIsland != sIsland)
 		{
-			ans = ans > cnt ? cnt : ans;
+			ans = ans > dis ? dis : ans;
 			return;
 		}
-		cnt++;
-		q.push({ qy, qx-1, cnt });
-		q.push({ qy, qx+1, cnt });
-		q.push({ qy-1, qx, cnt });
-		q.push({ qy+1, qx, cnt });
+
+		for (int i = 0; i < 4; i++)
+			q.push({ qy + dy[i], qx + dx[i], dis });
 	}
 }
 
@@ -73,7 +69,6 @@ int main()
 	cin.tie(0);
 
 	cin >> N;
-
 	for (int i = 1; i <= N; i++)
 	{
 		for (int j = 1; j <= N; j++)
@@ -88,7 +83,7 @@ int main()
 		for (int j = 1; j <= N; j++)
 		{
 			if (!map[i][j]) continue;
-			tag++;
+			cnt++;
 			DFS(i, j);
 		}
 	}
@@ -98,7 +93,7 @@ int main()
 	{
 		for (int j = 1; j <= N; j++)
 		{
-			if (!tags[i][j]) continue;
+			if (!map[i][j]) continue;
 			BFS(i, j);
 		}
 	}
