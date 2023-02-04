@@ -22,10 +22,8 @@ void BFS() {
 
 	while (!q.empty())
 	{
-		int y = q.front().y;
-		int x = q.front().x;
-		int cnt = q.front().cnt + 1;
-		int brk = q.front().brk;
+		auto [y, x, cnt, brk] = q.front();
+		cnt++;
 		q.pop();
 
 		if (y<1 || y>N || x<1 || x>M) continue;
