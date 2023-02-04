@@ -36,7 +36,7 @@ int main()
 
 	for (int i = 2; i < LIMIT; i++)
 	{
-		int j = 2;
+		int j = i;
 		while (i*j<LIMIT)
 		{
 			prime[i * j] = 1;
