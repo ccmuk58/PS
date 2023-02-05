@@ -25,21 +25,22 @@ void DFS(int y, int x)
 	for (int i = 0; i < 4; i++)
 		DFS(y + dy[i], x + dx[i]);
 }
+
 void BFS(int y, int x)
 {
 	bool visited[LIMIT][LIMIT]{};
-	int sIsland = names[y][x];
+	int start = names[y][x];
 
 	queue<Block> q;
 	q.push({ y, x, 0 });
 
 	while (!q.empty())
 	{
-		int qy = q.front().y;
-		int qx = q.front().x;
-		int dis = q.front().dis + 1;
-		int nIsland = names[qy][qx];
+		auto [qy, qx, dis] = q.front();
+		dis++;
+
 		q.pop();
+		int now = names[qy][qx];
 
 		//  OutOfBounds 방지
 		if (qy < 1 || qx < 1 || qy > N || qx > N) continue;
@@ -49,10 +50,10 @@ void BFS(int y, int x)
 		visited[qy][qx] = true;
 		
 		// 시간 초과 방지 (같은 섬간 이동 제한)
-		if (nIsland == sIsland && (y != qy && x != qx)) continue;
+		if (now == start && (y != qy && x != qx)) continue;
 
 		// 최단 경로 체크
-		if (nIsland && nIsland != sIsland)
+		if (now && now != start)
 		{
 			ans = ans > dis ? dis : ans;
 			return;
@@ -65,17 +66,12 @@ void BFS(int y, int x)
 
 int main() 
 {
-	ios_base::sync_with_stdio(0);
-	cin.tie(0);
+	cin.tie(0)->sync_with_stdio(0);
 
 	cin >> N;
 	for (int i = 1; i <= N; i++)
-	{
 		for (int j = 1; j <= N; j++)
-		{
 			cin >> map[i][j];
-		}
-	}
 
 	// 섬 구하기(DFS)
 	for (int i = 1; i <= N; i++)
