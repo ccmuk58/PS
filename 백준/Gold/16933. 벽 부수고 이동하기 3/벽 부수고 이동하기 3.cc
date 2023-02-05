@@ -3,56 +3,74 @@
 #include<queue>
 using namespace std;
 constexpr int N_LIMIT = 1002;
-constexpr int B_LIMIT = 12;
-constexpr int M_LIMIT = 3;
+constexpr int B_LIMIT = 11;
+constexpr int T_LIMIT = 2;
 
 struct Block {
 	int y;
 	int x;
 	int cnt;
 	int brk;
-	int time;
-	int moveType;
+	bool time;
 };
 int N, M, K;
 int map[N_LIMIT][N_LIMIT];
-int visited[N_LIMIT][N_LIMIT][B_LIMIT][M_LIMIT];
-int dy[] = { 0,0,-1,+1, 0 };
-int dx[] = { -1,+1,0,0, 0 };
+bool visited[N_LIMIT][N_LIMIT][B_LIMIT][T_LIMIT];
+int dy[] = { 0,0,-1,+1 };
+int dx[] = { -1,+1,0,0 };
 int ans;
 
 void BFS() {
 	queue<Block> q;
-	q.push({ 1,1,0,K,-1, 0});
+	q.push({ 1,1,1,K,true});
+	visited[1][1][K][true] = true;
 
 	while (!q.empty())
 	{
-		auto [y, x, cnt, brk, time, move] = q.front();
-		cnt++;
-		time *= -1;
+		auto [y, x, cnt, brk, time] = q.front();
 		q.pop();
 
-		if (y<1 || y>N || x<1 || x>M) continue;
-		if (visited[y][x][brk][move]) continue;
-		visited[y][x][brk][move] = 1;
-		if (map[y][x] && move)
-		{
-			if (brk <= 0) continue;
-			brk--;
-			if (time >= 0) 
-			{
-				q.push({ y , x , cnt, brk, time, 0 });
-				continue;
-			}
-		}
 		if (y == N && x == M)
 		{
 			ans = cnt;
 			return;
 		}
 
+		cnt++;
+		time = !time;
 		for (int i = 0; i < 4; i++)
-			q.push({ y + dy[i], x + dx[i], cnt, brk, time, 1});
+		{
+			int ny = y + dy[i];
+			int nx = x + dx[i];
+			int ry, rx, rb;
+			if (map[ny][nx])
+			{
+				if (brk <= 0) continue;
+				if (!time)
+				{
+					ry = ny;
+					rx = nx;
+					rb = brk - 1;
+				}
+				else
+				{
+					ry = y;
+					rx = x;
+					rb = brk;
+				}
+			}
+			else
+			{
+				ry = ny;
+				rx = nx;
+				rb = brk;
+			}
+			if (ry<1 || ry>N || rx<1 || rx>M) continue;
+			if (visited[ry][rx][rb][time]) continue;
+			visited[ry][rx][rb][time] = true;
+			q.push({ ry, rx, cnt, rb, time });
+
+		}
 	}
 	ans = -1;
 }
