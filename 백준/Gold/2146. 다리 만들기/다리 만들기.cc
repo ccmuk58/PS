@@ -32,35 +32,34 @@ void BFS(int y, int x)
 	int start = names[y][x];
 
 	queue<Block> q;
-	q.push({ y, x, 0 });
+	q.push({ y, x, 1 });
 
 	while (!q.empty())
 	{
 		auto [qy, qx, dis] = q.front();
-		dis++;
-
 		q.pop();
-		int now = names[qy][qx];
 
-		//  OutOfBounds 방지
-		if (qy < 1 || qx < 1 || qy > N || qx > N) continue;
 
-		// 메모리 초과 방지
-		if (visited[qy][qx]) continue;
-		visited[qy][qx] = true;
-		
-		// 시간 초과 방지 (같은 섬간 이동 제한)
-		if (now == start && (y != qy && x != qx)) continue;
-
-		// 최단 경로 체크
-		if (now && now != start)
-		{
-			ans = ans > dis ? dis : ans;
-			return;
-		}
-
+		dis++;
 		for (int i = 0; i < 4; i++)
-			q.push({ qy + dy[i], qx + dx[i], dis });
+		{
+
+			int ny = qy + dy[i];
+			int nx = qx + dx[i];
+			int next = names[ny][nx];
+
+			if (ny < 1 || nx < 1 || ny > N || nx > N) continue;
+			if (names[ny][nx] == start) continue;
+			if (visited[ny][nx]) continue;
+			visited[ny][nx] = true;
+			if (next && next != start)
+			{
+				ans = ans > dis ? dis : ans;
+				return;
+			}
+
+			q.push({ ny, nx, dis });
+		}
 	}
 }
 
