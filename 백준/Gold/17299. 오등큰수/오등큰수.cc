@@ -10,9 +10,10 @@ stack<int> A, s, ans;
 
 void solve()
 {
+	int a;
 	while (!A.empty())
 	{
-		int a = A.top();
+		a = A.top();
 		A.pop();
 
 		while (!s.empty())
@@ -38,6 +39,8 @@ void solve()
 
 int main()
 {
+	cin.tie(0)->sync_with_stdio(0);
+
 	cin >> N;
 
 	int n;
