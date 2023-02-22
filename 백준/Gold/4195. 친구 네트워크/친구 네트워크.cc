@@ -1,6 +1,6 @@
 #include<iostream>
 #include<algorithm>
-#include<map>
+#include<unordered_map>
 using namespace std;
 
 struct Value
@@ -10,7 +10,7 @@ struct Value
 };
 
 // key : current_id, value : {parent_id, count}
-map<string, Value> m_parent;
+unordered_map<string, Value> m_parent;
 
 void Init(string id)
 {
