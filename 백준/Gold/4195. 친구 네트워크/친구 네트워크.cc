@@ -2,24 +2,27 @@
 #include<algorithm>
 #include<map>
 using namespace std;
-constexpr int LIMIT = 100002;
 
-// key : current_id, value : parent_id
-map<string, string> m_parent;
-// key : root_id, value : count
-map<string, int> cnt;
+struct Value
+{
+	string id;
+	int cnt;
+};
+
+// key : current_id, value : {parent_id, count}
+map<string, Value> m_parent;
 
 void Init(string id)
 {
-	if (cnt[id]) return;
-	m_parent[id] = id;
-	cnt[id] = 1;
+	if (m_parent[id].cnt) return;
+	m_parent[id].id = id;
+	m_parent[id].cnt = 1;
 }
 string Find(string id)
 {
-	if (m_parent[id] == id) return id;
+	if (m_parent[id].id == id) return id;
 
-	return m_parent[id] = Find(m_parent[id]);
+	return m_parent[id].id = Find(m_parent[id].id);
 }
 void Union(string a, string b)
 {
@@ -28,16 +31,16 @@ void Union(string a, string b)
 
 	if (a == b) return;
 
-	if (cnt[a] > cnt[b])
+	if (m_parent[a].cnt > m_parent[b].cnt)
 		swap(a, b);
 
-	cnt[b] += cnt[a];
-	m_parent[a] = b;
+	m_parent[b].cnt += m_parent[a].cnt;
+	m_parent[a].id = b;
 }
 void PrintCnt(string id)
 {
 	id = Find(id);
-	cout << cnt[id] << "\n";
+	cout << m_parent[id].cnt << "\n";
 }
 
 int main()
@@ -60,6 +63,5 @@ int main()
 			PrintCnt(a);
 		}
 		m_parent.clear();
-		cnt.clear();
 	}
 }
