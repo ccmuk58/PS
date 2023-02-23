@@ -6,32 +6,34 @@ constexpr int LIMIT = 100002;
 
 int N;
 int water[LIMIT];
-int ansMin, ansMax;
+int ansFront, ansBack;
 
 void TwoPointer()
 {
-	int head = 0;
-	int tail = N - 1;
+	int front = 0;
+	int back = N - 1;
 	long long sum = 0;
 	long long ansSum = 10000000000;
 
-	while (head != tail && ansSum)
+	while (front != back && ansSum)
 	{
-		sum = water[head] + water[tail];
+		sum = water[front] + water[back];
 		if (abs(ansSum) > abs(sum))
 		{
 			ansSum = sum;
-			ansMin = water[head];
-			ansMax = water[tail];
+			ansFront = water[front];
+			ansBack = water[back];
 		}
 
-		if (sum < 0)	head++;
-		else tail--;
+		if (sum < 0) front++;
+		else back--;
 	}
 }
 
 int main() 
 {
+	cin.tie(0)->sync_with_stdio(0);
+
 	cin >> N;
 	for (int i = 0; i < N; i++)
 	{
@@ -40,5 +42,5 @@ int main()
 
 	TwoPointer();
 
-	cout << ansMin << " " << ansMax;
+	cout << ansFront << " " << ansBack;
 }
