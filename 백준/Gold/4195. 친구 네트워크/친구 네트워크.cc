@@ -31,8 +31,6 @@ void Union(string a, string b)
 
 	if (a == b) return;
 
-	if (m_parent[a].cnt > m_parent[b].cnt)
-		swap(a, b);
 
 	m_parent[b].cnt += m_parent[a].cnt;
 	m_parent[a].id = b;
