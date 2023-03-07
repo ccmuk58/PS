@@ -4,62 +4,67 @@
 #include<queue>
 using namespace std;
 constexpr int LIMIT = 50002;
+constexpr int MAX = 2123456789;
 struct Info
 {
-	int place;
+	int node;
 	int cost;
-	int sum;
 };
-struct cmp {
-	bool operator()(const Info &l, const Info &r) const {
-		return l.sum > r.sum;
+struct cmp 
+{
+	bool operator()(const Info &l, const Info &r) const 
+	{
+		return l.cost > r.cost;
 	}
 };
-vector<Info> v[LIMIT];
-int table[LIMIT];
+
+vector<Info> graph[LIMIT];
+int dis[LIMIT];
 bool fin[LIMIT];
-priority_queue<Info, vector<Info>, cmp> pq;
-int N, M, ans;
+int N, M;
+
+void Dijkstra()
+{
+	priority_queue<Info, vector<Info>, cmp> pq;
+	pq.push({ 1, 0 });
+	fin[1] = true;
+	while (!pq.empty())
+	{
+		auto [cur, sum] = pq.top();
+		if (cur == N) break;
+		fin[cur] = true;
+		pq.pop();
+
+		for (int i = 0; i < graph[cur].size(); i++)
+		{
+			auto next = graph[cur][i];
+			if (fin[next.node]) continue;
+			int nSum = sum + next.cost;
+			if (dis[next.node] <= nSum) continue;
+			dis[next.node] = nSum;
+
+			pq.push({ next.node, nSum });
+		}
+	}
+}
 
 int main()
 {
 	cin.tie(0)->sync_with_stdio(0);
-	
-	cin >> N >> M;
 
-	for (int i = 0; i < LIMIT; i++)
-	{
-		table[i] = 2000000000;
-	}
+	cin >> N >> M;
+	for (int i = 0; i <= N; i++)
+		dis[i] = MAX;
+
 	int a, b, c;
 	for (int i = 0; i < M; i++)
 	{
 		cin >> a >> b >> c;
-		v[a].push_back({ b, c, 0 });
-		v[b].push_back({ a, c, 0 });
+		graph[a].push_back({ b, c });
+		graph[b].push_back({ a, c });
 	}
 
-	pq.push({ 1, 0, 0 });
-	fin[1] = true;
-	while (!pq.empty())
-	{
-		auto last = pq.top();
-		fin[last.place] = true;
-		if (last.place == N) {
-			ans = last.sum;
-			break;
-		}
-		pq.pop();
-
-		auto curV = v[last.place];
-		for (int i = 0; i < curV.size(); i++)
-		{
-			if (fin[curV[i].place]) continue;
-			if (table[curV[i].place] <= last.sum + curV[i].cost) continue;
-
-			table[curV[i].place] = last.sum + curV[i].cost;
-			pq.push({ curV[i].place, curV[i].cost, table[curV[i].place] });
-		}
-	}
-	cout << ans;
+	Dijkstra();
+	
+	cout << dis[N];
 }
