@@ -1,6 +1,5 @@
 #include<iostream>
 #include<algorithm>
-#include<string>
 using namespace std;
 const string VALID = "valid";
 const string INVALID = "invalid";
@@ -10,11 +9,35 @@ constexpr char O = 'O';
 int countShape(const string& str, char shape)
 {
 	int cnt = 0;
-	for (const char &c : str)
+	for (const char& c : str)
 		if (c == shape) cnt++;
-
 	return cnt;
 }
+bool isValidXWin(int xCompletedCnt, int oCompletedCnt, int xCnt, int oCnt) {
+	return xCompletedCnt >= 3 && xCompletedCnt < 6 && oCompletedCnt == 0 && xCnt != oCnt;
+}
+bool isValidOWin(int xCompletedCnt, int oCompletedCnt, int xCnt, int oCnt) {
+	return xCompletedCnt == 0 && oCompletedCnt >= 3 && oCompletedCnt < 6 && xCnt == oCnt;
+}
+bool isFullBoard(int xCompletedCnt, int oCompletedCnt, int xCnt, int oCnt) {
+	return xCompletedCnt == 0 && oCompletedCnt == 0 && xCnt + oCnt == 9;
+}
+bool isValidTurns(int xCnt, int oCnt) {
+	return xCnt >= oCnt && xCnt - oCnt <= 1;
+}
+bool isValidBoard(const string& board, const string& completed) {
+	int xCnt = countShape(board, X);
+	int oCnt = countShape(board, O);
+	int xCompletedCnt = countShape(completed, X);
+	int oCompletedCnt = countShape(completed, O);
+
+	bool isValid = (isValidXWin(xCompletedCnt, oCompletedCnt, xCnt, oCnt) ||
+		isValidOWin(xCompletedCnt, oCompletedCnt, xCnt, oCnt) ||
+		isFullBoard(xCompletedCnt, oCompletedCnt, xCnt, oCnt)) &&
+		isValidTurns(xCnt, oCnt);
+	return isValid;
+}
+
 void chceckRows(const string& board, string& completed, char shape)
 {
 	for (int i = 0; i < 3; i++)
@@ -39,36 +62,26 @@ void checkDiagonals(const string& board, string& completed, char shape)
 	if (board[2] == shape && board[4] == shape && board[6] == shape)
 		for (int j = 0; j < 3; j++) completed[j*2 + 2] = shape;
 }
-string checkBoard(const string& board)
+void checkBoard(const string& board, string& completed)
 {
-	string completed = "123456789";
-	int xCnt = countShape(board, X);
-	int oCnt = countShape(board, O);
-	if (xCnt < oCnt || xCnt - oCnt > 1)	return INVALID;
-
-
 	chceckRows(board, completed, X);
 	chceckRows(board, completed, O);
 	checkColumns(board, completed, X);
 	checkColumns(board, completed, O);
 	checkDiagonals(board, completed, X);
 	checkDiagonals(board, completed, O);
+}
 
-	int xCompletedCnt = countShape(completed, X);
-	int oCompletedCnt = countShape(completed, O);
-	
-	if (xCompletedCnt >= 3 && xCompletedCnt < 6 && oCompletedCnt == 0)
-	{
-		if (xCnt == oCnt)return INVALID;
-		else return VALID;
-	}
-	else if (xCompletedCnt == 0 && oCompletedCnt >= 3 && oCompletedCnt < 6)
-	{
-		if (xCnt > oCnt)return INVALID;
-		else return VALID;
-	}
-	else if (xCompletedCnt == 0 && oCompletedCnt == 0 && xCnt + oCnt == 9) return VALID;
-	else return INVALID;
+
+string getBoardStatus(const string& board)
+{
+	string completed = "123456789";
+	checkBoard(board, completed);
+
+	if (isValidBoard(board, completed)) 
+		return VALID;
+	else
+		return INVALID;
 }
 int main()
 {
@@ -79,6 +92,6 @@ int main()
 	{
 		cin >> input;
 		if (input == "end") break;
-		cout << checkBoard(input) << "\n";
+		cout << getBoardStatus(input) << "\n";
 	}
 }
