@@ -4,145 +4,81 @@
 using namespace std;
 const string VALID = "valid";
 const string INVALID = "invalid";
-const char X = 'X';
-const char O = 'O';
+constexpr char X = 'X';
+constexpr char O = 'O';
 
-
-string Check(string board)
+int countShape(const string& str, char shape)
 {
-    int xCnt = 0;
-    int oCnt = 0;
-    for (int i = 0; i < board.length(); i++)
-    {
-        if (board[i] == X) xCnt++;
-        else if (board[i] == O) oCnt++;
-    }
-    if (xCnt < oCnt || xCnt - oCnt > 1)
-        return INVALID;
-    
-    char completed[9] = {};
+	int cnt = 0;
+	for (const char &c : str)
+		if (c == shape) cnt++;
 
-    // 행 연속 체크
-    for (int i = 0; i < 3; i++)
-    {
-        int continuousCnt = 1;
-        char firstChar = board[i * 3];
-        for (int j = 1; j < 3; j++)
-        {
-            if (board[i*3 + j] != firstChar) break;
-            continuousCnt++;
-        }
-        if (continuousCnt == 3)
-        {
-            if (firstChar == X)
-            {
-                for (int j = 0; j < 3; j++)
-                    completed[i * 3 + j] = X;
-            }
-            else if (firstChar == O)
-            {
-                for (int j = 0; j < 3; j++)
-                    completed[i * 3 + j] = O;
-            }
-        }
-    }
-    // 열 연속 체크
-    for (int i = 0; i < 3; i++)
-    {
-        int continuousCnt = 1;
-        char firstChar = board[i];
-        for (int j = 1; j < 3; j++)
-        {
-            if (board[i + j * 3] != firstChar) break;
-            continuousCnt++;
-        }
-        if (continuousCnt == 3)
-        {
-            if (firstChar == X)
-            {
-                for (int j = 0; j < 3; j++)
-                    completed[i+ j * 3] = X;
-            }
-            else if (firstChar == O)
-            {
-                for (int j = 0; j < 3; j++)
-                    completed[i + j * 3] = O;
-            }
-        }
-    }
+	return cnt;
+}
+void chceckRows(const string& board, string& completed, char shape)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		if (board[i * 3] == shape && board[i * 3 + 1] == shape && board[i * 3 + 2] == shape)
+			for (int j = 0; j < 3; j++)	completed[i * 3 + j] = shape;
+	}
+}
+void checkColumns(const string& board, string& completed, char shape)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		if (board[i] == shape && board[i + 3] == shape && board[i + 6] == shape)
+			for (int j = 0; j < 3; j++)	completed[i + j * 3] = shape;
+	}
+}
+void checkDiagonals(const string& board, string& completed, char shape)
+{
+	if (board[0] == shape && board[4] == shape && board[8] == shape) 
+		for (int j = 0; j < 3; j++) completed[j * 4] = shape;
 
-    // 대각선 연속 체크
-    int continuousCnt = 1;
-    char firstChar = board[0];
-    for (int j = 1; j < 3; j++)
-    {
-        if (board[j*4] != firstChar) break;
-        continuousCnt++;
-    }
-    if (continuousCnt == 3)
-    {
-        if (firstChar == X)
-        {
-            for (int j = 0; j < 3; j++)
-                completed[j * 4] = X;
-        }
-        else if (firstChar == O)
-        {
-            for (int j = 0; j < 3; j++)
-                completed[j * 4] = O;
-        }
-    }
-    continuousCnt = 1;
-    firstChar = board[2];
-    for (int j = 1; j < 3; j++)
-    {
-        if (board[2 + j * 2] != firstChar) break;
-        continuousCnt++;
-    }
-    if (continuousCnt == 3)
-    {
-        if (firstChar == X)
-        {
-            for (int j = 0; j < 3; j++)
-                completed[2 + j * 2] = X;
-        }
-        else if (firstChar == O)
-        {
-            for (int j = 0; j < 3; j++)
-                completed[2 + j * 3] = O;
-        }
-    }
+	if (board[2] == shape && board[4] == shape && board[6] == shape)
+		for (int j = 0; j < 3; j++) completed[j*2 + 2] = shape;
+}
+string checkBoard(const string& board)
+{
+	string completed = "123456789";
+	int xCnt = countShape(board, X);
+	int oCnt = countShape(board, O);
+	if (xCnt < oCnt || xCnt - oCnt > 1)	return INVALID;
 
-    int xCompleteCnt = 0;
-    int oCompleteCnt = 0;
-    for (int i = 0; i < 9; i++)
-    {
-        if (completed[i] == X) xCompleteCnt++;
-        else if (completed[i] == O) oCompleteCnt++;
-    }
 
-    if (xCompleteCnt >= 3 && xCompleteCnt < 6 && oCompleteCnt == 0)
-    {
-        if (xCnt == oCnt)return INVALID;
-        else return VALID;
-    }
-    else if (xCompleteCnt == 0 && oCompleteCnt >= 3 && oCompleteCnt < 6)
-    {
-        if(xCnt > oCnt)return INVALID;
-        else return VALID;
-    }
-    else if (xCompleteCnt == 0 && oCompleteCnt == 0 && xCnt + oCnt == 9) return VALID;
-    else return INVALID;
+	chceckRows(board, completed, X);
+	chceckRows(board, completed, O);
+	checkColumns(board, completed, X);
+	checkColumns(board, completed, O);
+	checkDiagonals(board, completed, X);
+	checkDiagonals(board, completed, O);
+
+	int xCompletedCnt = countShape(completed, X);
+	int oCompletedCnt = countShape(completed, O);
+	
+	if (xCompletedCnt >= 3 && xCompletedCnt < 6 && oCompletedCnt == 0)
+	{
+		if (xCnt == oCnt)return INVALID;
+		else return VALID;
+	}
+	else if (xCompletedCnt == 0 && oCompletedCnt >= 3 && oCompletedCnt < 6)
+	{
+		if (xCnt > oCnt)return INVALID;
+		else return VALID;
+	}
+	else if (xCompletedCnt == 0 && oCompletedCnt == 0 && xCnt + oCnt == 9) return VALID;
+	else return INVALID;
 }
 int main()
 {
-    cin.tie(0)->sync_with_stdio(0);
+	cin.tie(0)->sync_with_stdio(0);
 
-    string input;
-    while (true)
-    {
-        cin >> input;
-        if (input == "end") break;
-        cout << Check(input) << "\n";
-    }
+	string input;
+	while (true)
+	{
+		cin >> input;
+		if (input == "end") break;
+		cout << checkBoard(input) << "\n";
+	}
 }
