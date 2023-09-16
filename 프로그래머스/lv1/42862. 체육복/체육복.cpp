@@ -10,12 +10,10 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
     
     for(size_t i=1; i<=n; i++)
         student[i] = 1;
-
-    for(size_t i=0; i<lost.size(); i++)
-        student[lost[i]]--;
-    
-    for(size_t i=0; i<reserve.size(); i++)
-        student[reserve[i]]++;
+    for(size_t i : lost)
+        student[i]--;
+    for(size_t i : reserve)
+        student[i]++;
     
     for(size_t i=1; i<=n; i++)
     {
