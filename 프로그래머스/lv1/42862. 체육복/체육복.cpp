@@ -29,7 +29,6 @@ int solution(int n, vector<int> lost, vector<int> reserve) {
                 }    
             }
         }
-        
         if(student[i]>0) answer++;
     }
     return answer;
