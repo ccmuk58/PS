@@ -1,37 +1,31 @@
+#include <algorithm>
 #include <string>
 #include <vector>
-#include <queue>
-using namespace std;
+#include <iostream>
 
-int solution(int n, int k, vector<int> enemy) {
-    int answer = 0;
-    // 막은 적을 내림차순으로 저장
-	priority_queue<int> pq;
+int solution(int n, int k, std::vector<int> enemy) {
+    std::vector<int> buffer;
+    buffer.reserve(enemy.size());
+    std::make_heap(buffer.begin(), buffer.end());
     
-	while(answer < enemy.size())
-	{
-		pq.push(enemy[answer]);
-		n -= enemy[answer];
+    int answer = 0;
+    int sum = 0;
+    
+    for (const auto i : enemy) {
+        buffer.push_back(i);
+        std::push_heap(buffer.begin(), buffer.end());
         
-        // 막은 후 체력 0이상이면 다음 라운드로
-		if(n>=0)
-        {
-		    ++answer;
-            continue;            
-        }
-        // 0보다 작은데 무적권 없으면 gameover
-        else if(k<=0) 
-        {
-            return answer;
-        }
-        // 무적권으로 지난 라운드 중 가장 큰 라운드 무적 처리
-        else
-        {
+        sum += i;
+
+        if (sum > n) {
+            if(k<=0) return answer;
+            std::pop_heap(buffer.begin(), buffer.end());
+            sum -= buffer.back();
+            buffer.pop_back();
             --k;
-            n += pq.top();
-            pq.pop();
-            ++answer;   
         }
-	}
+        ++answer;
+    }
+    
     return answer;
 }
