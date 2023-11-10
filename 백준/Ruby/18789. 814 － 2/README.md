@@ -1,4 +1,4 @@
-# [Ruby IV] 814 - 2 - 18789 
+# [Ruby III] 814 - 2 - 18789 
 
 [문제 링크](https://www.acmicpc.net/problem/18789) 
 
@@ -8,7 +8,11 @@
 
 ### 분류
 
-해 구성하기, 그래프 이론, 그래프 탐색, 휴리스틱, 구현, 무작위화
+해 구성하기, 깊이 우선 탐색, 그래프 이론, 그래프 탐색, 휴리스틱, 구현, 무작위화
+
+### 제출 일자
+
+2023년 6월 28일 14:15:55
 
 ### 문제 설명
 
@@ -24,7 +28,7 @@
 
 <p> </p>
 
-<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/38d17ba7-3ff4-40e7-8a4b-9f7ae09d6652/-/preview/" style="height: 168px; width: 250px;"><br>
+<p style="text-align: center;"><img alt="" src="" style="height: 168px; width: 250px;"><br>
  </p>
 
 <p>원으로 표시된 1에서 시작해서, 아래쪽, 오른쪽, 왼쪽위, 왼쪽으로 이동하면 12314가 만들어지므로, 이 표에서는 12,314를 읽을 수 있다. 만약, 4에서 시작해서 역순으로 이동하면 41,321도 읽을 수 있을 것이다.</p>
