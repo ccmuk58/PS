@@ -14,13 +14,7 @@ int parent[LIMIT];
 int cost[LIMIT];
 bool isF[LIMIT];
 int ans;
-void init()
-{
-	for(int i=1; i<=N; i++)
-	{
-		parent[i]={i};
-	}
-}
+
 int find(int n)
 {
 	if(parent[n] == n)return n;
@@ -41,10 +35,9 @@ int main() {
 	cin >> N >> M >> k;
 
 	for(int i=1; i<=N; i++)
-	{
 		cin >> cost[i];
-	}
-	init();
+		
+	iota(parent+1, parent+N+1, 1);
 
 	for(int i=0; i<M; i++)
 	{
