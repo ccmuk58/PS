@@ -27,23 +27,31 @@ int main()
 			B++;
 	}
 	
-	int l = 1;
-	while(c[0]==c[l])
+	int l = 0;
+	if(c[0]=='R')
+		r1=1;
+	else
+		b1=1;
+
+	if(c[N-1]=='R')
+		r2=1;
+	else
+		b2=1;
+		
+	while(c[0]==c[++l])
 	{
 		if(c[0]=='R')
 			r1++;
 		else
 			b1++;
-		l++;
 	}
-	int r = 1;
-	while(c[N-1]==c[N-r])
+	int r = 0;
+	while(c[N-1]==c[N-(++r)-1])
 	{
 		if(c[N-1]=='R')
 			r2++;
 		else
 			b2++;
-		r++;
 	}
 	int sideR = max(r1, r2);
 	int sideB = max(b1, b2);
