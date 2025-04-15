@@ -10,7 +10,7 @@ constexpr int dx[] = {-1, +1, 0, 0};
 constexpr int LMT = 1e6 + 2;
 ll A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z;
 
-map<ll, ll> m;
+unordered_map<ll, ll> m;
 
 ll dc(ll a)
 {
