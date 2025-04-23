@@ -17,12 +17,7 @@ ll A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z;
 
 int ans = 0;
 vector<pl> v;
-bool cmp(pl a, pl b){
-    if(a.first == b.first) 
-        return a.second < b.second;
-    else 
-        return a.first < b.first;
-}
+
 int main()
 {
     cin.tie(0)->sync_with_stdio(0);
@@ -37,7 +32,7 @@ int main()
 	}
 	cin >> D;
 
-	sort(v.begin(), v.end(), cmp);
+	sort(v.begin(), v.end());
 
 	priority_queue<int> pq;
 	int i=0;
