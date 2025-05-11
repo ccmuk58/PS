@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+using pi = pair<int, int>;
+using ll = long long;
+using pl = pair<ll, ll>;
+using pip = pair<int, pi>;
+using pdp = pair<double, pi>;
+constexpr int dy[] = {0, 0, -1, +1};
+constexpr int dx[] = {-1, +1, 0, 0};
+constexpr int LIMIT = 1e5 + 2;
+constexpr ll MOD = 1'000'000'007;
+int A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z;
+
+int main()
+{
+    cin.tie(0)->sync_with_stdio(0);
+
+	cin >> N;
+	vector<int> v;
+	int mn=MOD;
+	int mni=0;
+	int ans=0;
+	for(int i=0; i<N; i++)
+	{
+		cin >> A;
+		v.push_back(A);
+		mn = min(mn, A);
+		ans = max(ans, A-mn);
+		cout << ans << " ";
+	}
+
+
+
+
+
+}
