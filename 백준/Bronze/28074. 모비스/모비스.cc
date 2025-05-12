@@ -1,26 +1,22 @@
-#include<iostream>
-#include<algorithm>
-#include<string>
-#include<map>
+#include<bits/stdc++.h>
 using namespace std;
 
 int main()
 {
 	cin.tie(0)->sync_with_stdio(0);
-	map<char, bool> m;
-	m['M'] = false;
-	m['O'] = false;
-	m['B'] = false;
-	m['I'] = false;
-	m['S'] = false;
 
-	string str;
-	cin >> str;
+	map<char,bool> m;
 
-	for (int i = 0; i < str.length(); i++)
+	string s;
+	cin >> s;
+
+	for(int i=0; i<s.length(); i++)
 	{
-		m[str[i]] = true;
+		m[s[i]]=true;
 	}
-	if (m['M'] && m['O'] && m['B'] && m['I'] && m['S']) cout << "YES";
-	else cout << "NO";
+
+	if(m['M']==true && m['O']==true && m['B']==true && m['I']==true && m['S']==true)
+		cout << "YES";
+	else
+		cout << "NO";
 }

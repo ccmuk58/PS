@@ -10,6 +10,10 @@
 
 구현, 문자열
 
+### 제출 일자
+
+2025년 5월 12일 18:08:58
+
 ### 문제 설명
 
 <p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/51823df7-804b-407c-8eb5-e961f749b14b/-/preview/"></p>
