@@ -10,49 +10,36 @@ constexpr int dx[] = {-1, +1, 0, 0, -1, +1, -1, +1};
 constexpr int LMT = 1e5 + 2;
 ll A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z;
 
-class sgtree{
-	private:
-	vector<ll> tree;
+class segtree {
+public:
+  int size;
+  vector<ll> tree;
+  segtree(int n) {
+    size = 1;
+    while (size < n)
+      size *= 2;
+    tree.assign(2 * size, 0);
+  }
 
-	public:
-	sgtree(int N)
-	{
-		tree.resize(N*4);
-	}
-	void init(int s, int e, int node, vector<ll>& v)
-	{
-		if(s == e){
-			tree[node] = 0;
-			return;
-		}
-		int mid = (s + e) / 2;
-		init(s, mid, node*2, v);
-		init(mid+1, e, node*2+1, v);
-		tree[node] = tree[node*2] + tree[node*2+1];
-	}
-	// idx번째 원소를 val로 바꿨을 때 [s, e] node를 업데이트 하는 함수
-	void update(int s, int e, int node, int idx, int val)
-	{
-        if (idx < s || idx > e)
-            return;
-        if (s == e)
-        {
-            tree[node] += val;
-            return;
-        }
-        int mid = (s + e) / 2;
-        update(s, mid, node * 2,idx ,val);
-        update(mid + 1, e, node * 2 + 1,idx, val);
-        tree[node] = tree[node * 2] + tree[node * 2 + 1];
+  void update(int i, ll x) {
+    i += size;
+    tree[i] += x;
+    for (i /= 2; i >= 1; i /= 2) {
+      tree[i] = tree[2 * i] + tree[2 * i + 1];
     }
-	// [s, e] node를 보고 있을 때, [l, r]구간의 연산 값을 구하는 함수
-	ll query(int s, int e, int node, int l, int r)
-	{
-		if(s > r || e < l) return 0;
-		if(s >= l && e <= r) return tree[node];
-		int mid = (s + e) / 2;
-		return query(s, mid, node*2, l, r) + query(mid+1, e, node*2+1, l, r);
-	}
+  }
+
+  // [l, r)
+  ll query(int l, int r) {
+    ll res = 0;
+    for (l += size, r += size; l < r; l /= 2, r /= 2) {
+      if (l % 2)
+        res = res + tree[l++];
+      if (r % 2)
+        res = res + tree[--r];
+    }
+    return res;
+  }
 };
 
 
@@ -62,20 +49,20 @@ int main()
 
 	ll ans = 0;
 	cin >> N;
-	sgtree sgt(N);
+	segtree sgt(N+2);
 
-	map<ll, ll> m;
+	unordered_map<ll, ll> um;
 	for(int i=0; i<N; i++)
 	{
 		cin >> A;
-		m[A] = i+1;
+		um[A] = i+1;
 	}
 	
 	for(int i=0; i<N; i++)
 	{
 		cin >> A;
-		ans += sgt.query(1, N, 1, m[A]+1, N);
-		sgt.update(1, N, 1, m[A], 1);
+		ans += sgt.query(um[A]+1, N+1);
+		sgt.update(um[A], 1);
 	}
 
 	cout << ans;
