@@ -32,19 +32,20 @@ int main()
 
 	while(start<=N)
 	{
-		while(start % 10 != 0 && start<=N)
+		while(start < 10 && start<=N)
 		{
 			calc(start, point);
 			start++;
 		}
 
-		if(start>N) break;
 
 		while(N%10 != 9 && start<=N)
 		{
 			calc(N, point);
 			N--;
 		}
+
+		if(start>N) break;
 
 		ll count = N/10 - start/10 + 1;
 
