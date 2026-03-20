@@ -24,7 +24,7 @@ int main()
 	{
 		cin >> A;
 		l.push_back(A);
-		um[A] = prev(l.end());
+		um[A] = --(l.end());
 	}
 
 	while(M--)
