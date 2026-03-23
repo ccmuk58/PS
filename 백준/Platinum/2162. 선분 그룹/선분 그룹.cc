@@ -69,13 +69,7 @@ int main()
 		cin >> x1 >> y1 >> x2 >> y2;
 
 		lines.push_back({x1, y1, x2, y2});
-		
-		if(lines[lines.size()-1].a > lines[lines.size()-1].b)
-		{
-			swap(lines[lines.size()-1].a, lines[lines.size()-1].b);
-		}
 	}
-	sort(lines.begin(), lines.end());
 
 	for(int i=0; i<N-1; i++)
 	{
