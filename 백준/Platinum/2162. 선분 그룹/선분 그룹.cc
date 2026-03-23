@@ -69,6 +69,7 @@ int main()
 		cin >> x1 >> y1 >> x2 >> y2;
 
 		lines.push_back({x1, y1, x2, y2});
+		
 		if(lines[lines.size()-1].a > lines[lines.size()-1].b)
 		{
 			swap(lines[lines.size()-1].a, lines[lines.size()-1].b);
@@ -88,8 +89,7 @@ int main()
 
 			if(a==0 && b==0)
 			{
-				
-				if(l1.a>l1.b) swap(l1.a,l1.b);
+				if(l1.a>l1.b) swap(l1.a, l1.b);
 				if(l2.a>l2.b) swap(l2.a, l2.b);
 				if(l2.a<=l1.b && l1.a<=l2.b)
 					uni(i, j);
