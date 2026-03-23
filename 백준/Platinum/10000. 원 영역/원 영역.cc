@@ -9,50 +9,60 @@ constexpr int dy[] = {0, 0, -1, +1, -1, -1, 1, 1};
 constexpr int dx[] = {-1, +1, 0, 0, -1, 1, -1, 1};
 constexpr int LMT = 1e6 + 2;
 ll A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z;
-auto cmp = [](const pl& a, const pl& b) {
-    if (a.first != b.first) return a.first < b.first;
-    return a.second > b.second;
-};
+
 int main()
 {
-	cin.tie(0)->sync_with_stdio(0);
-	
-	cin >> N;
-	ll ans = 1;
-	vector<pl> v;
-	stack<pair<pl, ll>> s;
+    cin.tie(0)->sync_with_stdio(0);
 
-	for(int i=0; i<N; i++)
-	{
-		cin >> A >> B;
-		v.push_back({A-B, A+B});
-	}
-	sort(v.begin(), v.end(), cmp);
+    cin >> N;
 
-	for(int i=0; i<N; i++)
-	{
-		auto cur = v[i];
-		ans++;
+    vector<pl> v;
+    for(int i = 0; i < N; i++)
+    {
+        cin >> A >> B;
+		// left
+        v.push_back({A - B, -1});
+		// right
+        v.push_back({A + B, -2});
+    }
 
-		if(s.empty())
-		{
-			s.push({{cur.first, cur.second}, cur.second-cur.first});
-		}
-		else
-		{
-			ll sub_len = 0;
-			while(!s.empty() && s.top().first.second <= cur.first)
-			{
-				sub_len = s.top().second;
-				s.pop();
-			}
+    sort(v.begin(), v.end());
 
-			if(!s.empty() && sub_len + (cur.second-cur.first) == s.top().first.second - s.top().first.first)
-				ans++;
+    stack<pl> s;
+    ll ans = 1;
 
-			s.push({{cur.first, cur.second}, sub_len + (cur.second-cur.first)});
-		}
-	}
+    for(const auto& cur : v)
+    {
+        if(cur.second == -1)
+        {
+            s.push(cur);
+            continue;
+        }
 
-	cout << ans;
+        ll sumW = 0;
+        while(!s.empty())
+        {
+            auto pre = s.top();
+            s.pop();
+
+            if(pre.second == -1)
+            {
+                ll w = cur.first - pre.first;
+
+                if(sumW == w)
+                    ans += 2;
+                else
+                    ans += 1;
+
+                s.push({w, -3});
+                break;
+            }
+            else if(pre.second == -3)
+            {
+                sumW += pre.first;
+            }
+        }
+    }
+
+    cout << ans;
 }
